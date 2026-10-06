@@ -679,6 +679,14 @@ def main():
     log("CLOUDFLARE WORKER", f"检测失败: {len(failed)}" + (f" (其中 Worker 异常 {len(worker_errors)})" if worker_errors else ""))
     log("CLOUDFLARE WORKER", f"耗时: {elapsed:.1f}s")
 
+    # 打印出现最多的错误样本, 便于区分"节点不可用"与"Worker/域名故障"
+    if worker_errors:
+        err_counter = {}
+        for r in worker_errors:
+            err_counter[r.get("error") or "unknown"] = err_counter.get(r.get("error") or "unknown", 0) + 1
+        for msg, cnt in sorted(err_counter.items(), key=lambda kv: -kv[1])[:3]:
+            log("CLOUDFLARE WORKER", f"  错误样本 [{cnt} 次]: {msg}")
+
     # 硬性失败: Worker 完全不可达 (没有任何一个请求拿到正常响应)
     if uniq and not success and len(worker_errors) == len(uniq):
         die("Worker 全部请求异常, 检测服务不可用 — 本次运行判定失败 (不生成空结果)")
