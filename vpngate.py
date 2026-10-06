@@ -525,7 +525,7 @@ def build_hosts_text(data):
 EDT_UUID = os.environ.get("EDT_UUID", "ac27dfbb-3981-455e-ab73-d74d20d73082")
 EDT_DOMAIN = os.environ.get("EDT_DOMAIN", "edt.nexon.kdns.fr")
 EDT_FINGERPRINT = os.environ.get("EDT_FINGERPRINT", "chrome")
-SUB_URL = os.environ.get("SUB_URL", "https://jerylihub.github.io/gate/sub.txt")
+SUB_URL = os.environ.get("SUB_URL", "https://zxz66569.github.io/gate/hosts.txt")
 
 
 def _b64_secret_encode(plaintext, secret):
